@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import type { ServiceLogType, SharedHostingHistoryData } from '@/types/service.type';
 
@@ -99,13 +100,8 @@ export function SharedHostingDetailLog({ isOpen, onClose, logData }: SharedHosti
                       <span>Usage</span>
                       <span>{((data.file_count / data.available_inode) * 100).toFixed(1)}%</span>
                     </div>
-                  </div>
-                  <div className="w-full bg-muted rounded-full h-2">
-                    <div
-                      className="bg-primary h-2 rounded-full transition-all duration-300"
-                      style={{
-                        width: `${Math.min((data.file_count / data.available_inode) * 100, 100)}%`,
-                      }}
+                    <Progress
+                      value={Math.min((data.file_count / data.available_inode) * 100, 100)}
                     />
                   </div>
                 </div>
@@ -135,14 +131,9 @@ export function SharedHostingDetailLog({ isOpen, onClose, logData }: SharedHosti
                         {((data.disk_usage_mb / data.available_space_mb) * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2">
-                      <div
-                        className="bg-primary h-2 rounded-full transition-all duration-300"
-                        style={{
-                          width: `${Math.min((data.disk_usage_mb / data.available_space_mb) * 100, 100)}%`,
-                        }}
-                      />
-                    </div>
+                    <Progress
+                      value={Math.min((data.disk_usage_mb / data.available_space_mb) * 100, 100)}
+                    />
                   </div>
                 </div>
               </div>
