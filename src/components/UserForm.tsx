@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,8 +28,13 @@ import type { UserType } from '@/types/user.type';
 // Form validation schema
 const userFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters').optional(),
+  email: z.email('Invalid email address'),
+  password: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.length >= 6, {
+      message: 'Password must be at least 6 characters',
+    }),
 });
 
 type UserFormData = z.infer<typeof userFormSchema>;
@@ -45,11 +51,22 @@ export function UserForm({ isOpen, onClose, onSubmit, user, mode }: UserFormProp
   const form = useForm<UserFormData>({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
-      name: user?.name || '',
-      email: user?.email || '',
+      name: '',
+      email: '',
       password: '',
     },
   });
+
+  // Reset form when modal opens/closes or user changes
+  useEffect(() => {
+    if (isOpen) {
+      form.reset({
+        name: user?.name || '',
+        email: user?.email || '',
+        password: '',
+      });
+    }
+  }, [isOpen, user, form]);
 
   const handleSubmit = (data: UserFormData) => {
     onSubmit(data);

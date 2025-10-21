@@ -9,6 +9,8 @@ interface AppContainerPageProps {
   children?: ReactNode;
   showDivider?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  actions?: ReactNode;
+  headerActions?: ReactNode;
 }
 
 export function AppContainerPage({
@@ -18,6 +20,8 @@ export function AppContainerPage({
   children,
   showDivider = true,
   size = 'md',
+  actions,
+  headerActions,
 }: AppContainerPageProps) {
   const sizeClasses = {
     sm: 'text-xl font-bold',
@@ -29,11 +33,22 @@ export function AppContainerPage({
   return (
     <div className={cn('space-y-2', className)}>
       <div className="space-y-2">
-        <h1 className={sizeClasses[size]}>{title}</h1>
-        {description && <p className="text-muted-foreground">{description}</p>}
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <h1 className={sizeClasses[size]}>{title}</h1>
+            {description && <p className="text-muted-foreground">{description}</p>}
+          </div>
+          {headerActions && <div className="flex items-center gap-2">{headerActions}</div>}
+        </div>
       </div>
 
       {showDivider && <div className="border-b" />}
+
+      {actions && (
+        <div className="flex items-center justify-between pt-4">
+          <div className="flex items-center gap-2">{actions}</div>
+        </div>
+      )}
 
       {children && <div className="pt-6">{children}</div>}
     </div>

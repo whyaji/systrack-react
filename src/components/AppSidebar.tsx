@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { BarChart3, Bell, Home, LogOut, Search, Settings, User, Users } from 'lucide-react';
+import { BarChart3, Bell, Home, LogOut, Search, Server, Settings, User, Users } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import {
@@ -21,6 +21,11 @@ const navigationItems = [
     title: 'Dashboard',
     url: '/dashboard',
     icon: Home,
+  },
+  {
+    title: 'Services',
+    url: '/services',
+    icon: Server,
   },
   {
     title: 'Users',
