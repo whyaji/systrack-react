@@ -11,51 +11,51 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
-import type { ServiceType } from '@/types/service.type';
+import type { UserType } from '@/types/user.type';
 
-import { ServiceManagement } from '../ServiceManagement';
+import { UserManagement } from './UserManagement.js';
 
-interface ServiceContextMenuProps {
-  data: ServiceType;
+interface UserContextMenuProps {
+  data: UserType;
   children: React.ReactNode;
 }
 
-export function ServiceContextMenu({ data: service, children }: ServiceContextMenuProps) {
+export function UserContextMenu({ data: user, children }: UserContextMenuProps) {
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
     mode: 'create' | 'edit' | 'view' | 'delete';
-    service: ServiceType | null;
+    user: UserType | null;
   }>({
     isOpen: false,
     mode: 'view',
-    service: null,
+    user: null,
   });
 
   const handleCopyId = () => {
-    navigator.clipboard.writeText(service.id.toString());
+    navigator.clipboard.writeText(user.id.toString());
   };
 
-  const handleViewService = () => {
+  const handleViewUser = () => {
     setModalState({
       isOpen: true,
       mode: 'view',
-      service,
+      user,
     });
   };
 
-  const handleEditService = () => {
+  const handleEditUser = () => {
     setModalState({
       isOpen: true,
       mode: 'edit',
-      service,
+      user,
     });
   };
 
-  const handleDeleteService = () => {
+  const handleDeleteUser = () => {
     setModalState({
       isOpen: true,
       mode: 'delete',
-      service,
+      user,
     });
   };
 
@@ -63,7 +63,7 @@ export function ServiceContextMenu({ data: service, children }: ServiceContextMe
     setModalState({
       isOpen: false,
       mode: 'view',
-      service: null,
+      user: null,
     });
   };
 
@@ -72,32 +72,30 @@ export function ServiceContextMenu({ data: service, children }: ServiceContextMe
       <ContextMenu>
         <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
         <ContextMenuContent className="w-48">
-          <ContextMenuLabel>Service Actions</ContextMenuLabel>
+          <ContextMenuLabel>User Actions</ContextMenuLabel>
           <ContextMenuSeparator />
           <ContextMenuItem onClick={handleCopyId}>
             <MoreHorizontal className="mr-2 h-4 w-4" />
-            Copy service ID
+            Copy user ID
           </ContextMenuItem>
-          <ContextMenuItem onClick={handleViewService}>
+          <ContextMenuItem onClick={handleViewUser}>
             <MoreHorizontal className="mr-2 h-4 w-4" />
-            View service
+            View user
           </ContextMenuItem>
-          <ContextMenuItem onClick={handleEditService}>
+          <ContextMenuItem onClick={handleEditUser}>
             <MoreHorizontal className="mr-2 h-4 w-4" />
-            Edit service
+            Edit user
           </ContextMenuItem>
           <ContextMenuSeparator />
-          <ContextMenuItem
-            onClick={handleDeleteService}
-            className="text-red-600 focus:text-red-600">
+          <ContextMenuItem onClick={handleDeleteUser} className="text-red-600 focus:text-red-600">
             <MoreHorizontal className="mr-2 h-4 w-4" />
-            Delete service
+            Delete user
           </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
 
-      <ServiceManagement
-        service={modalState.service}
+      <UserManagement
+        user={modalState.user}
         mode={modalState.mode}
         isOpen={modalState.isOpen}
         onClose={handleCloseModal}

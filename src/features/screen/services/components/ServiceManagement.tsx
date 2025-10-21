@@ -9,8 +9,8 @@ import {
 } from '@/hooks/query/services/useServiceMutations';
 import type { ServiceType } from '@/types/service.type';
 
-import { ConfirmationDialog } from './ConfirmationDialog';
-import { ServiceForm } from './ServiceForm';
+import { ConfirmationDialog } from '../../../../components/ConfirmationDialog.js';
+import { ServiceForm } from './ServiceForm.js';
 
 interface ServiceManagementProps {
   service?: ServiceType | null;

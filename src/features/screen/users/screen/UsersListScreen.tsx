@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 import { AppContainerPage } from '@/components/AppContainerPage';
 import { AppTable } from '@/components/AppTable';
-import { userColumns } from '@/components/columns/userColumns';
-import { UserContextMenu } from '@/components/context-menu/UserContextMenu';
 import { Button } from '@/components/ui/button';
-import { UserManagement } from '@/components/UserManagement';
+import { userColumns } from '@/features/screen/users/components/userColumns';
+import { UserContextMenu } from '@/features/screen/users/components/UserContextMenu';
+import { UserManagement } from '@/features/screen/users/components/UserManagement';
 import { useUsersQuery } from '@/hooks/query/users/useUsersQuery';
 import { usePaginationConfig } from '@/hooks/usePaginationConfig.hook';
 import { Route } from '@/routes/_authenticated/users';

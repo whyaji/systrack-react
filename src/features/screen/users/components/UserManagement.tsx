@@ -9,7 +9,7 @@ import {
 } from '@/hooks/query/users/useUserMutations';
 import type { UserType } from '@/types/user.type';
 
-import { ConfirmationDialog } from './ConfirmationDialog';
+import { ConfirmationDialog } from '../../../../components/ConfirmationDialog.js';
 import { UserForm } from './UserForm';
 
 interface UserManagementProps {

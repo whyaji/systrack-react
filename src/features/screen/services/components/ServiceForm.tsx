@@ -30,7 +30,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import type { ServiceType } from '@/types/service.type';
+import {
+  SERVICE_STATUS_OPTIONS,
+  SERVICE_TYPE_OPTIONS,
+  type ServiceType,
+} from '@/types/service.type';
 
 // Form validation schema
 const serviceFormSchema = z.object({
@@ -38,7 +42,7 @@ const serviceFormSchema = z.object({
   description: z.string().min(2, 'Description must be at least 2 characters'),
   type: z.number().min(1).max(3, 'Please select a valid service type'),
   status: z.number().min(0).max(1, 'Please select a valid status'),
-  resStatusApiUrl: z.string().url('Please enter a valid URL'),
+  resStatusApiUrl: z.url('Please enter a valid URL'),
   resStatusApiKey: z.string().min(1, 'API key is required'),
 });
 
@@ -51,17 +55,6 @@ interface ServiceFormProps {
   service?: ServiceType | null;
   mode: 'create' | 'edit' | 'view';
 }
-
-const SERVICE_TYPE_OPTIONS = [
-  { value: 1, label: 'Server' },
-  { value: 2, label: 'VPS' },
-  { value: 3, label: 'Shared Hosting' },
-];
-
-const SERVICE_STATUS_OPTIONS = [
-  { value: 1, label: 'Active' },
-  { value: 0, label: 'Inactive' },
-];
 
 export function ServiceForm({ isOpen, onClose, onSubmit, service, mode }: ServiceFormProps) {
   const form = useForm<ServiceFormData>({
