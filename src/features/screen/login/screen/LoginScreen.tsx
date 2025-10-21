@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { apiClient } from '@/lib/api';
 import { config } from '@/lib/config';
 import { type LoginFormData, loginSchema } from '@/lib/validations';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 
 export function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);

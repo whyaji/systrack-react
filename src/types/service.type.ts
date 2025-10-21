@@ -10,6 +10,40 @@ export type ServiceType = {
   updatedAt: string;
 };
 
+export type SharedHostingHistoryData = {
+  id: number;
+  base_path: string;
+  file_count: number;
+  disk_usage_mb: number;
+  available_inode: number;
+  available_space_mb: number;
+  checked_at: string;
+};
+
+export type SharedHostingHistoryMeta = {
+  base_path: string;
+  days: number;
+  start_date: string;
+  end_date: string;
+  total_records: number;
+};
+
+export type SharedHostingHistoryResponse = {
+  success: boolean;
+  data: SharedHostingHistoryData[];
+  meta: SharedHostingHistoryMeta;
+};
+
+export type ServiceLogType = {
+  id: number;
+  serviceId: number;
+  data: Record<string, unknown> | SharedHostingHistoryData; // JSON data from the log
+  recordId: number;
+  recordedAt: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type ServiceTypeLabels = {
   [key: number]: string;
 };

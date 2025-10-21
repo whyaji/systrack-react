@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { createService, deleteService, updateService } from '@/lib/api/serviceApi';
+import { createService, deleteService, syncServiceLogs, updateService } from '@/lib/api/serviceApi';
 import type { ServiceType } from '@/types/service.type';
 
 export function useCreateServiceMutation() {
@@ -41,6 +41,18 @@ export function useDeleteServiceMutation() {
     onSuccess: () => {
       // Invalidate and refetch services list
       queryClient.invalidateQueries({ queryKey: ['services'] });
+    },
+  });
+}
+
+export function useSyncServiceLogsMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: syncServiceLogs,
+    onSuccess: (_, serviceId) => {
+      // Invalidate and refetch service logs for the specific service
+      queryClient.invalidateQueries({ queryKey: ['serviceLogs', serviceId] });
     },
   });
 }

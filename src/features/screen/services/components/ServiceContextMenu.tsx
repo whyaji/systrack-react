@@ -1,6 +1,7 @@
 'use client';
 
-import { MoreHorizontal } from 'lucide-react';
+import { Link } from '@tanstack/react-router';
+import { FileText, MoreHorizontal } from 'lucide-react';
 import { useState } from 'react';
 
 import {
@@ -86,6 +87,13 @@ export function ServiceContextMenu({ data: service, children }: ServiceContextMe
             <MoreHorizontal className="mr-2 h-4 w-4" />
             Edit service
           </ContextMenuItem>
+          <ContextMenuSeparator />
+          <Link to={'/services/$serviceId'} params={{ serviceId: service.id.toString() }}>
+            <ContextMenuItem>
+              <FileText className="mr-2 h-4 w-4" />
+              View service logs
+            </ContextMenuItem>
+          </Link>
           <ContextMenuSeparator />
           <ContextMenuItem
             onClick={handleDeleteService}

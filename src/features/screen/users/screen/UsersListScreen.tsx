@@ -27,7 +27,7 @@ export function UsersListScreen() {
   const users: UserType[] = (queryData as PaginatedResponse<UserType>)?.data || [];
 
   return (
-    <div className="container mx-auto py-10">
+    <>
       <AppContainerPage
         title="Users"
         description="Manage your users and their permissions."
@@ -52,6 +52,6 @@ export function UsersListScreen() {
         isOpen={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
       />
-    </div>
+    </>
   );
 }

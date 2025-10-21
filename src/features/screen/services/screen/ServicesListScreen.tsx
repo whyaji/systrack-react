@@ -27,7 +27,7 @@ export function ServicesListScreen() {
   const services: ServiceType[] = (queryData as PaginatedResponse<ServiceType>)?.data || [];
 
   return (
-    <div className="container mx-auto py-10">
+    <>
       <AppContainerPage
         title="Services"
         description="Manage your services and their monitoring."
@@ -52,6 +52,6 @@ export function ServicesListScreen() {
         isOpen={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
       />
-    </div>
+    </>
   );
 }

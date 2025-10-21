@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { AppContainerPage } from '@/components/AppContainerPage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 
 export function DashboardScreen() {
   const { user, isAuthenticated } = useAuthStore();

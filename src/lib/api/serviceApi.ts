@@ -45,3 +45,23 @@ export function getServiceById(id: number) {
     method: 'GET',
   });
 }
+
+export function getServiceLogs(serviceId: number, queryParams: PaginationParams) {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(queryParams).forEach(([key, value]) => {
+    if (value) {
+      searchParams.append(key, value.toString());
+    }
+  });
+
+  return apiClient.request(`/services/${serviceId}/logs?${searchParams.toString()}`, {
+    method: 'GET',
+  });
+}
+
+export function syncServiceLogs(serviceId: number) {
+  return apiClient.request(`/services/${serviceId}/sync-logs`, {
+    method: 'POST',
+  });
+}
