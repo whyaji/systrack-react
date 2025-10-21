@@ -15,6 +15,8 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
+import { apiClient } from '@/lib/api';
+import { useAuthStore } from '@/stores/authStore';
 
 const navigationItems = [
   {
@@ -53,9 +55,13 @@ const quickActions = [
 ];
 
 export function AppSidebar() {
-  const handleLogout = () => {
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = async () => {
     // TODO: Implement logout functionality
     console.log('Logout clicked');
+    await apiClient.logout();
+    logout();
   };
 
   return (

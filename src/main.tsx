@@ -6,12 +6,9 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { routeTree } from './routeTree.gen';
-import { useAuthStore } from './stores/auth';
+import { useAuthStore } from './stores/authStore';
 
 const queryClient = new QueryClient();
-
-// Initialize auth store (this restores state from localStorage)
-useAuthStore.getState().initialize();
 
 // Create a new router instance
 const router = createRouter({

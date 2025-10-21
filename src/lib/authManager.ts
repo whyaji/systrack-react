@@ -1,4 +1,4 @@
-import { config } from './config';
+import { config } from './config.js';
 
 interface AuthTokens {
   accessToken: string;
@@ -55,13 +55,6 @@ class AuthManager {
     }
   }
 
-  private saveAuthState(): void {
-    if (this.authState.tokens && this.authState.user) {
-      localStorage.setItem('authTokens', JSON.stringify(this.authState.tokens));
-      localStorage.setItem('user', JSON.stringify(this.authState.user));
-    }
-  }
-
   private clearAuthState(): void {
     localStorage.removeItem('authTokens');
     localStorage.removeItem('user');
@@ -76,7 +69,8 @@ class AuthManager {
     this.authState.tokens = tokens;
     this.authState.user = user;
     this.authState.isAuthenticated = true;
-    this.saveAuthState();
+    localStorage.setItem('authTokens', JSON.stringify(tokens));
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   getAccessToken(): string | null {
@@ -85,6 +79,14 @@ class AuthManager {
 
   getRefreshToken(): string | null {
     return this.authState.tokens?.refreshToken || null;
+  }
+
+  getAccessTokenExpiredAt(): string | null {
+    return this.authState.tokens?.accessTokenExpiredAt || null;
+  }
+
+  getRefreshTokenExpiredAt(): string | null {
+    return this.authState.tokens?.refreshTokenExpiredAt || null;
   }
 
   getUser(): User | null {
@@ -132,7 +134,7 @@ class AuthManager {
         }),
       });
 
-      if (!response.ok) {
+      if (response.status === 401) {
         this.logout();
         return false;
       }
@@ -148,7 +150,7 @@ class AuthManager {
         };
 
         this.authState.tokens = newTokens;
-        this.saveAuthState();
+        localStorage.setItem('authTokens', JSON.stringify(newTokens));
         return true;
       }
 

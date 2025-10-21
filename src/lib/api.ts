@@ -1,4 +1,4 @@
-import { authManager } from './auth';
+import { authManager } from './authManager';
 import { config } from './config';
 
 const API_BASE_URL = config.apiUrl;

@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { apiClient } from '@/lib/api';
-import { authManager, type AuthTokens, type User } from '@/lib/auth';
+import { authManager, type AuthTokens, type User } from '@/lib/authManager';
 
 interface AuthState {
   user: User | null;
@@ -25,7 +24,7 @@ type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // Initial state
       user: null,
       tokens: null,
@@ -66,49 +65,7 @@ export const useAuthStore = create<AuthStore>()(
         set({ error: null });
       },
 
-      initialize: () => {
-        // Get current state from Zustand store (which is persisted)
-        console.log('initialize');
-        const currentState = get();
-
-        // If we already have data in Zustand, sync it with AuthManager
-        if (currentState.user && currentState.tokens) {
-          authManager.setAuthData(currentState.tokens, currentState.user);
-        } else {
-          // If no data in Zustand, try to load from AuthManager
-          const user = authManager.getUser();
-          const tokens = authManager.isAuthenticated()
-            ? {
-                accessToken: authManager.getAccessToken()!,
-                refreshToken: authManager.getRefreshToken()!,
-                accessTokenExpiredAt: '',
-                refreshTokenExpiredAt: '',
-              }
-            : null;
-
-          if (user && tokens) {
-            set({
-              user,
-              tokens,
-              isAuthenticated: true,
-            });
-          }
-        }
-
-        // Only fetch user profile if we have authentication data
-        if (authManager.isAuthenticated()) {
-          apiClient
-            .getUserProfile()
-            .then((response) => {
-              set({
-                user: response.data,
-              });
-            })
-            .catch((error) => {
-              console.error('Failed to fetch user profile:', error);
-            });
-        }
-      },
+      initialize: () => {},
     }),
     {
       name: 'auth-storage',
