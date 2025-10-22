@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import type { ServiceType } from '@/types/service.type';
 import { SERVICE_STATUS_LABELS, SERVICE_TYPE_LABELS } from '@/types/service.type';
+import { formatBytesToString } from '@/utils/formatBytes';
 
 interface ServiceOverviewCardProps {
   service: ServiceType;
@@ -38,13 +39,13 @@ export function ServiceOverviewCard({ service, latestLog }: ServiceOverviewCardP
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground">Disk Usage</div>
                 <div className="text-2xl font-bold">
-                  {latestLog.disk_usage_mb.toLocaleString()} MB
+                  {formatBytesToString(latestLog.disk_usage_mb)}
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="text-sm font-medium text-muted-foreground">Available Space</div>
                 <div className="text-2xl font-bold">
-                  {latestLog.available_space_mb.toLocaleString()} MB
+                  {formatBytesToString(latestLog.available_space_mb)}
                 </div>
               </div>
             </div>

@@ -4,6 +4,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import type { ServiceLogType, SharedHostingHistoryData } from '@/types/service.type';
+import { formatBytesToString } from '@/utils/formatBytes';
+import { formatNumber } from '@/utils/formatNumber';
 
 interface SharedHostingDetailLogProps {
   isOpen: boolean;
@@ -15,18 +17,6 @@ export function SharedHostingDetailLog({ isOpen, onClose, logData }: SharedHosti
   if (!logData) return null;
 
   const data = logData.data as SharedHostingHistoryData;
-
-  const formatBytes = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1000;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
-  const formatNumber = (num: number) => {
-    return num.toLocaleString();
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -114,13 +104,11 @@ export function SharedHostingDetailLog({ isOpen, onClose, logData }: SharedHosti
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Disk Usage</span>
-                    <Badge variant="outline">{formatBytes(data.disk_usage_mb * 1000 * 1000)}</Badge>
+                    <Badge variant="outline">{formatBytesToString(data.disk_usage_mb)}</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Available Space</span>
-                    <Badge variant="outline">
-                      {formatBytes(data.available_space_mb * 1000 * 1000)}
-                    </Badge>
+                    <Badge variant="outline">{formatBytesToString(data.available_space_mb)}</Badge>
                   </div>
 
                   {/* Usage Progress Bar */}

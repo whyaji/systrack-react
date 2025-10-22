@@ -2,6 +2,7 @@ import { Activity, FileText, FolderOpen, HardDrive } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { DashboardServiceData } from '@/hooks/query/dashboard/useDashboardData';
+import { formatBytesToString } from '@/utils/formatBytes';
 
 interface DashboardSummaryProps {
   data: DashboardServiceData[];
@@ -34,8 +35,8 @@ export function DashboardSummary({ data }: DashboardSummaryProps) {
     },
     {
       title: 'Total Disk Usage',
-      value: `${(totalDiskUsage / 1000).toFixed(1)} GB`,
-      description: `${(totalAvailableSpace / 1000).toFixed(1)} GB available`,
+      value: formatBytesToString(totalDiskUsage),
+      description: `${formatBytesToString(totalAvailableSpace)} available`,
       icon: HardDrive,
       color: 'text-green-600',
     },

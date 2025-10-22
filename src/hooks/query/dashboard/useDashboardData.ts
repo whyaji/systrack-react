@@ -44,7 +44,12 @@ export function useDashboardData(options: UseDashboardDataOptions = {}) {
       if (sharedHostingServices.length === 0) return [];
 
       const logPromises = sharedHostingServices.map((service) =>
-        getServiceLogs(service.id, { page: 1, limit: logLimit })
+        getServiceLogs(service.id, {
+          page: 1,
+          limit: logLimit,
+          order: 'desc',
+          sort_by: 'recordedAt',
+        })
       );
 
       return Promise.all(logPromises);

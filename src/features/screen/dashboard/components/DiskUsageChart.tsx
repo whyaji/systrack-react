@@ -38,7 +38,10 @@ export function DiskUsageChart({ data, serviceName }: DiskUsageChartProps) {
             <XAxis
               dataKey="date"
               tick={{ fontSize: 12 }}
-              tickFormatter={(value) => new Date(value).toLocaleDateString()}
+              tickFormatter={(value) => value}
+              angle={-45}
+              textAnchor="end"
+              height={80}
             />
             <YAxis tick={{ fontSize: 12 }} />
             <ChartTooltip content={<ChartTooltipContent />} />
